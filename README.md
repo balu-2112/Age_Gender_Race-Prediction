@@ -16,6 +16,6 @@ Age, Gender and Race Prediction by Using GoogleNet (Inception) Architecture and 
  4. For Live Detection <br/>
    * i) [HaarCascade](https://github.com/BolluBalaji/Age_Gender_Race/blob/master/haarcascade_frontalface_default.xml) Face Detector<br/>
       - Run [HarCascade_Face_Recog.py](https://github.com/BolluBalaji/Age_Gender_Race/blob/master/HarCascade_Face_Recog.py)<br/>
-  * ii)[HOG](https://pypi.org/project/hog/) Histogram of oriented gradients<br/>
+  * ii)[HOG](https://pypi.org/project/hog/) Histogram of oriented gradients Face Detector<br/>
       - Run [Hog_Face_Recog.py](https://github.com/BolluBalaji/Age_Gender_Race/blob/master/Hog_Face_Recog.py)<br/>
 
