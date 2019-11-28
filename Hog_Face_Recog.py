@@ -1,3 +1,4 @@
+#importing necessary libraries
 import cv2
 import os
 import numpy as np
@@ -5,10 +6,12 @@ from keras.models import load_model
 import dlib
 from imutils import face_utils
 import tensorflow as tf
+
+#getting current working directory
 path = os.getcwd()
 
 
-
+#details 
 IMG_WIDTH = IMG_HEIGHT = 200
 Id_Gen = {0: 'male', 1: 'female'}
 Gen_Id = dict((g, i) for i, g in Id_Gen.items())
@@ -19,23 +22,29 @@ Race_Id = dict((r, i) for i, r in Id_Race.items())
 
 print("Loading PreTrained Model......")
 
+
+#Loading Pretrained Inception Multi-CNN model
 model_path = path + "\\" + 'Age_Gender_Race_Model_1.h5'
 model = load_model(model_path)
 
-file = path + "\\" + 'haarcascade_frontalface_default.xml'
-print(file)
+#file = path + "\\" + 'haarcascade_frontalface_default.xml'
+#print(file)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-#face_cascade = cv2.CascadeClassifier(file)
+#Detecing Face using dlib
 face_detect = dlib.get_frontal_face_detector()
 
-
+#Opening Web Cam
 print("Starting Web Cam....")
 cap = cv2.VideoCapture(0)
 print("Web Cam Started.....")
-cap.set(3, 800) #WIDTH
-cap.set(4, 500) #HEIGHT
+
+#Frame Size
+#Width
+cap.set(3, 800) 
+#height
+cap.set(4, 500) 
 
 while True:
     #Capture frame-by-frame
@@ -45,7 +54,7 @@ while True:
     rects = face_detect(gray,1)
 
     for (i,rect) in enumerate(rects):
-
+        #drawing rectangle on detected Face
         (x,y,w,h) = face_utils.rect_to_bb(rect)
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 255), 2)
 
@@ -57,6 +66,7 @@ while True:
 
         roi = roi.reshape(-1,200,200,3)
         
+        #predicting age, race and model using Pretrained Model
         age, race, gender = model.predict(roi)
 
         age, race, gender = [int((age[0]*100)/1.8),Id_Race[race.argmax()],Id_Gen[gender.argmax()]]
